@@ -1,0 +1,22 @@
+<div class="class">
+    <h2>TWO DATA BINDING</h2><br>
+
+    <form>
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Digite o seu nome">
+
+        <input type="submit" value="enviar">
+    </form>
+    <div *ngIf="name !== ''">
+        <p>O nome é: {{ name }}</p>
+    </div><br>
+
+    <div>
+        <form>
+            <input type="text" name="emaaaail" [(ngModel)]="email" placeholder="Digite o e-mail">
+            <input type="submit" value="enviar">
+        </form>
+        <div class="res" *ngIf="email !== ''">
+            <p>O email é: {{ email }}</p>
+        </div>
+    </div>
+</div>

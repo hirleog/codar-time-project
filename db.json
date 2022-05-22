@@ -1,0 +1,28 @@
+{
+  "animalList": [
+    {
+      "id": 1,
+      "name": "tommy",
+      "type": "horse",
+      "age": 3
+    },
+    {
+      "id": 2,
+      "name": "rony",
+      "type": "leão",
+      "age": 3
+    },
+    {
+      "id": 3,
+      "name": "thauan",
+      "type": "gato",
+      "age": 31
+    },
+    {
+      "id": 4,
+      "name": "tadeu",
+      "type": "macaco",
+      "age": 6
+    }
+  ]
+}

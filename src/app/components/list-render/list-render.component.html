@@ -1,0 +1,20 @@
+<div class="clas">
+    <h2>Animals: </h2>
+    <ul>
+        <li *ngFor="let animal of animalsData">
+            <a routerLink="/list/{{ animal.id }}">{{ animal.name }}</a>  - tipo {{ animal.type }}
+            
+            <button class="btn btn-primary" (click)="showAge(animal)">Mostrar</button>
+            <button class="btn btn-primary" (click)="deleteAnimal(animal.id)">Deletar</button>
+        </li>
+        <h2>{{ animalDetails }}</h2>
+    </ul>
+    <!-- <ul>
+        <li [ngStyle]="{'margin-bottom': space}" *ngFor="let animal of animalList">
+            Nome: <a [routerLink]="[ '/link/{{ animal.id }}']">{{ animal.name }}</a> - Tipo: {{ animal.type }}
+            <button class="btn btn-primary" (click)="showAge(animal)">Show age</button>
+            <button class="btn btn-primary" (click)="removeAnimal(animal)">Delete</button>
+        </li>
+        <h3>{{animalDetails}}</h3>
+    </ul> -->
+</div>

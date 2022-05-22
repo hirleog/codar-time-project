@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+a {
+    background-color: orange;
+}
+
+h2 {
+    padding: 50px;
+    background-color: aqua;
+    margin: auto;
+    width: auto;
+}
+body {
+    padding-bottom: 500px;
+}
+
+.class {
+    border-bottom: 1px solid red;
+    padding: 2em;
+    margin-bottom: 1em;
+
+}

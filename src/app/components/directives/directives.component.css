@@ -1,0 +1,18 @@
+.small-title {
+    font-size: 20px;
+    font-weight: 600px;
+}
+.green-title{
+color: rgb(233, 0, 0);
+}
+
+.underline-title{
+    text-decoration: underline;
+}
+
+.estruturaNGCLASS{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 200px;
+    font-style: italic;
+    color: red;
+}

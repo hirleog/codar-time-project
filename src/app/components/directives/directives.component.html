@@ -1,0 +1,24 @@
+<div class="class">
+<h1>DIRECTIVES COMPONENT</h1>
+<h2 [ngStyle]="{ 'font-size': size + 'px', 'font-family': font, 'color': color }">
+    Testando diretiva ngStyle
+</h2>
+
+<h2 [ngClass]="classes">testando diretivas de classe 1</h2>
+<h2 [ngClass]="classes">testando diretivas de classe 2</h2>
+<h2 [ngClass]="underline">testando diretivas de classe 3</h2>
+<!-- <h2 [ngClass]="classique"> testando estrutura do ng class</h2>  -->
+<br><br>
+
+<div>O aviso abaixo será ocultado com um metodo.</div>
+
+<p *ngIf="hideThem; else hideWarning">O aviso está aparecendo. Diretiva funcionando</p>
+<ng-template #hideWarning>
+    O aviso está escondido! Mude o valor do booleano para vê-lo.
+</ng-template>
+
+
+
+</div>
+
+<!-- <app-if-render></app-if-render> -->

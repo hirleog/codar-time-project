@@ -1,0 +1,382 @@
+========================= SOBRE @input() - É CORRETO ================== 
+
+ a palavra dentro das chaves '[]' pode ser qualquer uma, mas o nome da variavel tem que aparecer
+nos parentes, exemplo ' [nomeDaSuaEscolha]="nomeVariavel" ' 
+ O 'name' é como vou chamar ele no component filho
+o 'userName', é como estou chamando no component pai -->
+
+variaveis declaras no pai, que são chamadas no HTML, afim de passar as infos para o filho.
+são passadas dentro do 'selector' do filho, que foi chamado anteriormente.
+Após passar as infos por property binding ao HTML (seletor do filho), faça o @Input no TS do filho. 
+
+siga a herarquia de components para fazer.
+
+declare a variavel que quer passar pro filho NO COMPONENT PAI
+
+.TS =  public parents = {
+    pai: 'norton',
+    mae: 'zilda'}
+
+  *Atraves do seletor do filho, declare-o no pai e faça o proprety binding pra repassar a informação:
+
+  .HTML = 
+  <app-parent-data [guilhermeName]="name" [seusPais]="parents"></app-parent-data>
+
+------ NO COMPONENT FILHO ------
+
+.TS = 
+@Input() seusPais!: {pai: string, mae: string};
+
+.HTML = 
+<h3>Seu pai é: {{ seusPais.pai }}</h3>
+<h3>Sua mae é: {{ seusPais.mae }}</h3>
+===================SOBRE DIRETIVAS DE ESTILOS============================
+
+Esse modelo aplica estilos em line, é bom para usar quando temos uma condicional
+que aplica estilos na pagina.
+
+[ngStyle]="{'property': expression}"
+
+onde se aplica uma propriedade do CSS e seu valor. exemplo:
+
+[ngStyle]="{ 'font-size': size}"
+o 'size' foi declarado no Typescript com um valor (size = '40';) e está sendo chamado.
+O 'font-size' é uma expressão CSS como 'color, font-family'.
+
+<h2 [ngStyle]="{ 'font-size': size + 'px', 'font-family': font, 'color': color }">
+    Testando diretiva ngStyle
+</h2>
+
+====================
+
+SOBRE [ngClass]=" exemplo "
+Esse tbm serve para mexer no estilo do HTML.
+Porem vc não declara em line os estilos.
+Vc cria no typescript. exemplo:
+
+.TS =  public classique = 'estruturaNGCLASS'
+
+.HTML = <h2 [ngClass]="classique"> testando estrutura do ng class</h2>
+
+.CSS = .estruturaNGCLASS{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 200px;
+        font-style: italic;
+    }
+
+Dessa maneira conseguimos reaproveitar os mesmo estilos da diretiva que aplicamos os estilos.
+
+==============================================
+
+SOBRE NG IF DIRECTIVE
+
+Se trata de uma tag que se usa no HTML para ocultar algum elemento. EXEMPLOS de usabilidade:
+
+
+1- A div só aparece se a variavel booleana for true.
+.TS = public canShow: boolean = true;
+.HTML = <div *ngIf="canShow">estamos mostrando isso pq foi permitido</div>
+
+* Se for 'true' exibe o elemento, se for 'false, esconde o elemento'
+
+2- O nome só aparece se 'myName' for igual a gui.
+.TS = public myName = "gui";
+.HTML = <h2 *ngIf="myName === 'gui'">O nome é Guilherme</h2>
+
+
+3- Aqui temos o ngIf acompanhado do else, que mostra outra coisa caso a condição seja falsa.
+Para colocar o bloco de instrução do 'else', devemos usar a anotação 'ng-template' seguido de uma tag(#) contendo
+o nome da variavel que o 'else' está chamando, neste caso essa variavel é '#notFoundMyName'
+.TS = public myName = 'gui';
+.HTML =  <h2 *ngIf="myName === 'gui'; else notFoundMyName">O nome é Guilherme</h2>
+            <ng-template #notFoundMyName>
+                <div>O nome não foi encontrado</div>
+            </ng-template>
+
+
+4 - Mais um exemplo de ngIf com 'else' + 'ng-template'. Dessa vez usando um metodo de ocultação.
+
+.TS = public hideThem: boolean = false;
+    public hideElement() {
+        this.hideThem = !this.hideThem;
+    }
+
+    
+.HTML = <div>O aviso abaixo será ocultado com um metodo.</div>
+
+<p *ngIf="hideThem; else hideWarning">O aviso está aparecendo. Diretiva funcionando</p>
+        <ng-template #hideWarning>
+            O aviso está escondido! Mude o valor do booleano para vê-lo.
+        </ng-template>
+
+===================================================================
+
+SOBRE EVENTOS (CLICK)="METODOname"
+
+A marioria dos metodos que fazem eventos são 'void'. exemplo:
+nomeMetodo():void{}
+
+Esee tipo de metodo é chamado de 'toggle':
+
+.TS = showMessage(): void {
+    this.show = !this.show;
+  }
+
+.HTML = <div>
+    <p *ngIf="show">Exibindo menssagem!</p>
+    <button (click)="showMessage()">Clique em mim</button>
+</div>
+
+- onde ao apertar o botão que está linkado ao metodo, o conteudo some e quando clicado novamente ele aparece.
+
+
+======================================================================
+
+
+SOBRE @OUTPUT
+
+A anotação @OUTPUT emite um evento do component filho para o componente pai. E baseado na emição de evento, eu realizarei outra ação 
+que é o metodo do component pai.
+
+Nesse exemplo criei um butao no filho, que vai receber um click que será conectado com um "EventEmitter" no typescript
+e que vai gerar uma numero aleatorio atraves do 'Math.random'
+
+.HTML do filho
+<button (click)="handleClick()">Alterar o numero aleatoriamente.</button>
+
+.TS do filho
+*Aqui importamos o output e o eventemmitter para repassar a função ao component pai.
+*Usamos a anotação '@Output' para instanciar a variavel que será ultilizada no pai. A variavel é do tipo EventEmitter.
+*A função recebe a variavel do tipo "EventEmiiter" e "emit" o evento através dessa linha "this.changeNumber.emit()"
+
+* os nomes dos metodos são padrões de boas praticas com essas ferramentas.
+-----------------------
+
+import {Output, EventEmitter}
+
+public @Output() changeNumber: EventEmitter<any> = new EventEmitter()
+
+handleClick(){
+    this.changeNumber.emit();
+  }
+
+-----------------------
+
+.HTML do pai
+<div class="class">
+    <h1>O numero é: {{  myNumber  }} </h1>
+    <!-- <button (click)="onChangeNumber()">clique aqui</button> -->
+
+    <app-change-number (changeNumber)="onChangeNumber()"></app-change-number>
+</div>
+
+.TS do pai
+public myNumber: number;
+
+onChangeNumber(){
+    this.myNumber = Math.floor(Math.random() * 10);
+  }
+
+  =====================================================
+   
+  SOBRE RENDERIZAÇÃO DE LISTA COM NGFOR
+
+  É usado para renderizar uma lista de objetos como um array de objetos criado no .TS, e mostralo no template HTML.
+
+  A sintaxe: *ngFor="let item of items" (Essa sintaxe seleciona um 'item' de uma lista de 'items')
+  * A palavra 'item' pode ser substituida por qualquer outra, oq importa é o nome do array de items, que é usado sempre no plural 
+  por se tratar de mais de 1 item.
+
+  EXEMPLO:
+
+  .TS =  animals = [
+  {name: 'turca',  type: 'dog'},
+  {name: 'oliver', type: 'cat'},
+  {name: 'ben',    type: 'dog'},
+  {name: 'tom',    type: 'horse'},
+];
+
+
+  .HTML = 
+  <div class="clas">
+    <h2>Animals: </h2>
+    <ul>
+        <li *ngFor="let animal of animals">Nome: {{ animal.name }} - Tipo: {{ animal.type }}</li>
+    </ul>
+</div>
+================================================================
+
+
+SOBRE INTERFACES
+
+Toda entidade que vamos trabalhar precisa de uma inteface.
+POR EXEMPLO. Temos uma entidade de 'usuario', ela estará descrita em uma interfae contendo dados do usuario, como:
+nome, email, data de aniversario.
+
+ou seja todas propriedades que temos na tabela do usuario será refletida na interface. Isso organiza, padroniza e facilita a manutenção.
+
+exemplo sintaxe:
+
+export InterfaceName {
+    id:number;
+    name:string;
+    email:string;
+}
+
+=================================================================
+
+SoBRE PIPES
+
+São transformadores de dados que nao precisam necessariamente de dados vindo do .TS
+Exemplos de pipes:
+
+.TS = 
+someText = 'TESTANDO O PIPE OPERATOR'
+today = new Date();
+
+HTML =
+<div class="class">
+    <p>Pipe de upercase</p>
+    <h2>{{ 'texto aqui' | uppercase }}</h2>
+
+    <p>pipe para transformar em titulo</p>
+    <h2>{{ someText | titlecase }}</h2>
+
+
+    <p>trazendo a data do 'Date()'</p>
+    <h2>{{ today }}</h2>
+
+    <p>pipe para trazer a data formatada</p>
+    <h2>{{ today | date }}<br><br>
+        {{ today | date: "fullDate"}}
+    </h2>
+</div>
+
+==========================================================
+
+SOBRE TWO-DATA BINDING
+
+São eventos em tempo real que aparecem no template html sem precisar de funções ou metodos. Exemplos:
+
+.TS = 
+name: string = ''
+email: string = ''
+
+.HTML = 
+<div class="class">
+    <h2>TWO DATA BINDING</h2><br>
+    <form>
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Digite o seu nome">
+
+        <input type="submit" value="enviar">
+    </form>
+    <div *ngIf="name !== ''">
+        <p>O nome é: {{ name }}</p>
+    </div><br>
+
+    <div>
+        <form>
+            <input type="text" name="emaaaail" [(ngModel)]="email" placeholder="Digite o e-mail">
+            <input type="submit" value="enviar">
+        </form>
+        <div class="res" *ngIf="email !== ''">
+            <p>O email é: {{ email }}</p>
+        </div>
+    </div>
+</div> 
+
+*Ao conectarmos o 'ngModel' com o mesmo nome da variavel 'email'. ao digitar o email no input, ele exibe abaixo dentro de um binding.
+Esse '{{ email }}' esta chamando a variavel que foi preenchida dentro do input. Essa conexão é devida ao '[(ngModel)]'
+
+====================================================================
+
+SOBRE SERVICE 
+
+Geralmente ficam as requisições para as APIs, juntamente com as regras de negocio.
+
+
+
+============================ ANGULAR ROUTER ====================================================
+
+Nos usamos o app-routing-module para inserir as nossas rotas de navegação entre components exemplo:
+*para que as rotas funcionem, importe o 'approutingmodule' no 'appModule'
+
+.TS = const routes: Routes = [
+  { path: '', component: FirstComponent },
+  { path: 'list', component: ListRenderComponent },
+];
+
+---IMPORTANTE---
+usamos os seletores para ir chamando os components dentro de outros components e mostrar na tela.
+Mas quando temos as rotas traçadas, basta inserir o seletor '<router-outlet></router-outlet>' no component raiz.
+Dessa forma, coseguimos navegar entre as paginas alterando o url ou criando um menu de navegação.
+---IMPORTANTE---
+
+Podemos criar um menu e linkar as rotas dentro de uma ancora TAG: <a></a>, exemplo:
+<nav>
+    <a [routerLink]="[ '/' ]">Home</a>
+    <a [routerLink]="[ '/list']">List</a>
+</nav>
+
+------------------------
+
+OUTRO EXEMPLO DE ROTAS (ROTA DINAMICA)
+
+*CONCEITO: O ID da URL sempre será alterado quando a rota for acesada. Podendo ter diversos elementos sendo exbidos no mesmo componente
+ mas sendo chamados pelo o ID.
+
+Nesse exemplo, podemos ver uma rota para o component ListRenderComponent (list).
+Se trata de uma pagina do nosso site (um componente).
+
+No item abaixo temos essa tag diferente "list/:id". Esse ID chama um outro component dentro da propria pagina ListRenderComponent (list).
+Dessa forma temos um item (id), sendo chamado dentro de um component
+
+
+=========SELECIONANDO O ANIMAL DA LISTA PELO ID E EXIBINDO O DADO=======
+
+*'List' é o componente que renderiza a lista de animais, pokemons etc (listas no geral)
+*'List/:id' é um link para outro component que vai mostrar os dados do animal individualmente em outro compoente.
+{ path: 'list', component: ListRenderComponent },
+{ path: 'list/:id', component: ItemDetailComponent },
+
+Após declarar as rotas. Vá no componente que renderizou a lista e coloque um link amarrado no nome do animal.
+
+ex: 
+<h2>Animals: </h2>
+<ul>
+    <li *ngFor="let animal of animalsData">
+        <a routerLink="/list/{{ animal.id }}">{{ animal.name }}</a>  - tipo {{ animal.type }}
+    </li>
+</ul>
+
+Dessa maneira, criamos uma rota apartir do nome de cada animal renderizado pelo "ngfor"<div class="
+"></div>
+
+
+2º PEGANDO O ANIMAL PELO ID DELE.
+
+IMPORTS NECESSARIOS:
+private listService: ListService (onde estará o serviço que pega pelo id)
+private route: ActivatedRoute    (responsavel por invocar o snapshot para pegar pelo id)
+
+TS:
+getAnimal() {
+    //utilizando o route.snapshow.paramMap para dar um 'get' no ID do animal.
+    //afim de mostra-lo
+    //Transformando o a string "id" em 'Number' para não apontar erros
+
+    const id = Number(this.route.snapshot.paramMap.get("id"));
+    this.listService.getItem(id)
+      .subscribe((animal) => (this.animal = animal));
+  }
+--------------------
+Service:
+getItem(id:number): Observable<Animal>{
+    return this.http.get<Animal>(`${this.apiUrl}/${id}`)
+    .pipe((res:any) => {
+      return res;
+    })
+  }
+========================== REQUISIÇÕES HTTP ======================================================
+
+

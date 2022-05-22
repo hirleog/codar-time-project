@@ -1,0 +1,12 @@
+<div class="class">
+    <h1>IF RENDER COMPONENT</h1>
+
+    <div *ngIf="canShow">estamos mostrando isso pq foi permitido</div>
+
+    <h2 *ngIf="myName === 'gui'; else notFoundMyName">O nome é Guilherme</h2>
+    <ng-template #notFoundMyName>
+        <div>O nome não foi encontrado</div>
+    </ng-template>
+    
+    
+</div>
