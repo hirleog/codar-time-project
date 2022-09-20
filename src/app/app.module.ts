@@ -12,6 +12,7 @@ import { MomentFormComponent } from './components/moment-form/moment-form.compon
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MesssagesComponent } from './components/messsages/messsages.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MesssagesComponent } from './components/messsages/messsages.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
 
   ],
   providers: [],
