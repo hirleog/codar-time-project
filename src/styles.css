@@ -1,4 +1,11 @@
 
+:root{
+    --lignt: #efefef;
+    --primary: #dec129;
+    --secondary: #444;
+
+}
+
 *{
     padding: 0;
     margin: 0;

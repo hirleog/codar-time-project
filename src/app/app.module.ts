@@ -11,6 +11,7 @@ import { NewMomentComponent } from './components/page/new-moment/new-moment.comp
 import { MomentFormComponent } from './components/moment-form/moment-form.component';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MesssagesComponent } from './components/messsages/messsages.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AboutComponent,
     HomeComponent,
     NewMomentComponent,
-    MomentFormComponent
+    MomentFormComponent,
+    MesssagesComponent
   ],
   imports: [
     BrowserModule,

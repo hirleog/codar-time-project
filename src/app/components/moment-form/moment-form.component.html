@@ -3,11 +3,15 @@
         <label for="title">Titulo</label>
         <input type="text" placeholder="Coloque um titulo" formControlName="title" required>
     </div>
+<!-- 
+    input que faz a validação se o campo do titulo está preenchida
+    E mostra uma mensagem de erro baseado em ngIf -->
     <div *ngIf="title.invalid && formDir.submitted" class="validation-error">
         <p *ngIf="title.errors?.['required']" style="color: #DC3545;">O titulo é obrigatorio</p>
     </div>
 
-
+    <!-- input que faz a validação se o campo da descriçãoe stá preenchida
+    E mostra uma mensagem de erro baseado em ngIf -->
     <div class="form-group">
         <label for="description">Descrição</label>
         <textarea type="text" placeholder="Oque aconteceu lá?" formControlName="description" required></textarea>
@@ -17,9 +21,10 @@
     </div>
 
 
+    <!-- input que solicita a imagem ao usuario -->
     <div class="form-group">
         <label for="image">Coloque a foto que mais te marcou</label>
-        <input type="file">
+        <input type="file" (change)="onFileSelected($event)">
     </div>
     <input type="submit" value="{{ btnText }}">
 </form>
