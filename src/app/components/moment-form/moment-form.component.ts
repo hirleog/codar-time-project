@@ -1,6 +1,6 @@
 import { Moment } from './../../interfaces/Moment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-moment-form',
@@ -16,7 +16,7 @@ export class MomentFormComponent implements OnInit {
   @Input() btnText!: string;
   @Input() testandoInputData!: string;
   //criando form group
-  momentForm!: FormGroup;
+  momentForm!: UntypedFormGroup;
 
   constructor() { }
 
@@ -24,11 +24,11 @@ export class MomentFormComponent implements OnInit {
 
     //inicializando form group
     //iniciando os campos com string vazia (''), pois posteriormente vão vir preenchidas com a responsta da requisição
-    this.momentForm = new FormGroup({
-      id: new FormControl('', [Validators.required]),
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl(''),
-      image: new FormControl(''),
+    this.momentForm = new UntypedFormGroup({
+      id: new UntypedFormControl('', [Validators.required]),
+      title: new UntypedFormControl('', [Validators.required]),
+      description: new UntypedFormControl(''),
+      image: new UntypedFormControl(''),
     })
   }
 

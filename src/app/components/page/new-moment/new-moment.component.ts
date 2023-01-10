@@ -1,6 +1,8 @@
+import { MessagesService } from './../../../services/messages.service';
 import { MomentService } from './../../../services/moment.service';
 import { Moment } from './../../../interfaces/Moment';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-moment',
@@ -11,7 +13,11 @@ export class NewMomentComponent implements OnInit {
 
   public btnText = 'Compartilhar!'
   public testandoInputData = 'testeeeeeeeeeeeeee'
-  constructor(private momentService: MomentService) { }
+  constructor(
+    private momentService: MomentService,
+    private messageService: MessagesService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -30,17 +36,17 @@ export class NewMomentComponent implements OnInit {
     //to-do
     console.log("deu boa")
     await this.momentService.createMoment(formData).subscribe();
+    this.messageService.add("Momento adicionado com sucesso!")
+    this.router.navigate([' '])
   }
 
   //metodo para testar emissão de eventos de pai para filho
-    //new moment é o pai
-  public createHandler2(moment:Moment) {
+  //new moment é o pai
+  public createHandler2(moment: Moment) {
     console.log('emitindo evento')
   }
 
-  // enviar para o servico
-
-  // exibir msg 
+  
 
   // redirect
 
